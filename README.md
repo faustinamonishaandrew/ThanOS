@@ -1,7 +1,7 @@
 # ThanOS — Dynamic Workspace Desktop Environment
 
 **Java 21 · JavaFX · Maven · Fully Offline**  
-College Data Structures Project
+
 
 ---
 
@@ -108,14 +108,6 @@ thanos/
   apps/           FileManager, Notes, Calculator, TaskManager, Calendar, Settings, Assistant
 ```
 
----
 
-## Viva points
-
-1. Why each workspace has its **own** Linked List and Queue  
-2. How HashMap enables instant workspace switch  
-3. How Stack powers “← Previous”  
-4. How windows are tagged and filtered on switch (state preservation)  
-5. Offline design — File I/O only, mock weather, local assistant  
 
 *The Dynamic Workspace is not a tab strip — it is the operating model of ThanOS.*

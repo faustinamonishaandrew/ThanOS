@@ -1,116 +1,153 @@
-# ThanOS
+# ThanOS — Desktop Environment Simulator
 
-Java + HTML/CSS/JavaScript desktop environment (JavaFX WebView).
+A desktop environment simulator built with **Java, JavaFX, HTML, CSS, and JavaScript**. ThanOS combines a Java-powered backend with a web-based user interface to recreate the experience of using a modern desktop operating system.
 
-This package is an **updated version of the original ThanOS project**, not a rewrite. Existing apps (Notes, Calendar, Calculator, Settings, lock screen, taskbar, window management) are preserved. Added: real File Manager with sample files, Recent Files queue (max 7), theme wallpapers.
+## Overview
+
+ThanOS is a desktop simulation project designed to demonstrate desktop-style user interfaces, application management, window handling, and local data persistence.
+
+The project uses JavaFX WebView to render the frontend and a JavaScript bridge to connect the user interface with Java backend services.
+
+## Features
+
+- **Desktop Interface** — A graphical desktop environment with interactive UI components.
+- **Window Management** — Open and manage application windows.
+- **Application Manager** — Register and manage available applications.
+- **Notes** — Create and manage text notes.
+- **Calendar** — Manage calendar events.
+- **Calculator** — Perform basic calculations.
+- **File Manager** — Browse and interact with files in the application's sandbox.
+- **Settings** — Manage supported desktop preferences.
+- **Recent Items** — Track recently accessed files and applications.
+- **Window History** — Maintain application launch history.
+- **Local Persistence** — Store settings, notes, events, recent items, and workspace-related data locally.
+- **Sample Resources** — Includes sample files and resources for testing and demonstration.
+
+## Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| Java | Backend logic and application services |
+| JavaFX | Desktop application framework |
+| JavaFX WebView | Rendering the web-based interface |
+| HTML | User interface structure |
+| CSS | Interface styling |
+| JavaScript | Frontend interactions |
+| JavaScript Bridge | Communication between JavaScript and Java |
+| Java Collections | Managing windows, applications, history, and recent items |
+
+## Project Structure
+
+```text
+ThanOS/
+├── src/                 # Java source code
+├── ui/                  # HTML, CSS, and JavaScript interface
+├── assets/              # Wallpapers and other visual assets
+├── samples/             # Sample files and resources
+├── README.md            # Project documentation
+├── run.bat              # Windows launch script, if included
+└── run.sh               # Unix-like launch script, if included
+```
+
+The project may also contain IDE configuration files such as `.project` and `.classpath`.
+
+### Main Backend Components
+
+- `ThanOS.java` — Application entry point and JavaFX initialization.
+- `JavaBridge.java` — Connects the JavaScript frontend to Java backend functionality.
+- `SystemStore.java` — Coordinates application services and persistent data.
+- `AppManager.java` and `AppDefinition.java` — Manage application definitions and registration.
+- `WindowManager.java` and `WindowModel.java` — Manage application windows.
+- `WindowHistory.java` — Maintains window or application history.
+- `RecentFilesQueue.java` — Tracks recent items.
+- `NoteManager.java` — Handles note-related operations.
+- `CalendarManager.java` — Handles calendar events.
+- `SettingsService.java` — Manages settings.
+- `WorkspaceManager.java`, `Workspace.java`, `WorkspaceAction.java`, and `WorkspaceQueue.java` — Support workspace-related functionality.
 
 ## Requirements
 
-- JDK 21 (or 17+)
-- JavaFX SDK 21 (modules: `javafx.controls`, `javafx.graphics`, `javafx.web`)
+Before running ThanOS, ensure that you have:
 
-## Run (Windows)
+- A compatible Java Development Kit (JDK).
+- A compatible JavaFX SDK.
+- An IDE such as Eclipse or Visual Studio Code, or a terminal.
+- Git, if you want to clone or contribute to the repository.
 
-1. Install JDK 21 and extract the JavaFX SDK (e.g. `C:\javafx-sdk-21.0.6`).
-2. Open a Command Prompt in this folder.
-3. Either set the environment variable:
-   ```
-   set JAVAFX_HOME=C:\javafx-sdk-21.0.6
-   ```
-   or edit `run.bat` if your path differs.
-4. Double-click `run.bat` or run it from the prompt.
+JavaFX modules required by the application include `javafx.controls` and `javafx.web`.
 
-Compilation uses `src\*.java` (no Maven). The working directory must be this project folder so `ui/`, `assets/`, and `samples/` are found.
+## Installation and Setup
 
-## Run (Linux / macOS)
+### 1. Clone the repository
 
 ```bash
-export JAVAFX_HOME=/path/to/javafx-sdk-21
-./run.sh
+git clone https://github.com/faustinamonishaandrew/ThanOS.git
 ```
 
-## Unlock
+### 2. Open the project
 
-Any non-empty password unlocks the demo lock screen.
+Open the cloned `ThanOS` directory in Eclipse or your preferred Java IDE.
 
-## Features preserved / added
+Ensure the IDE recognizes the `src` directory as a Java source folder and that the JavaFX SDK is configured correctly.
 
-| Area | Status |
-|------|--------|
-| Lock screen, desktop, taskbar, Start menu | Preserved |
-| Notes, Calendar, Calculator, Settings | Preserved |
-| Window management (LinkedList) | Preserved |
-| App registry (HashMap) | Preserved |
-| Navigation history (Stack) | Preserved |
-| Workspace demo UI | Removed from UI (classes kept for compatibility) |
-| Manual "Enqueue / Process Queue" demo | Removed |
-| Dark / light theme | Preserved; switches supplied wallpapers |
-| File Manager | Enhanced: real files, create/rename/copy/delete, preview |
-| Sample files (~15) | Seeded into `~/.thanos/files` on first run only |
-| Recent Files (Queue, max 7) | New; persists in `~/.thanos/recent.txt` |
+### 3. Configure JavaFX
 
-## Data locations
+Configure the JavaFX SDK in your IDE and add the required modules.
 
-- User data: `~/.thanos/` (settings, notes, events, recent list, file sandbox)
-- Bundled samples: `samples/` (copied once into the sandbox if empty)
-- Wallpapers: `assets/wallpaper-dark.jpg`, `assets/wallpaper-light.jpg`
+For a command-line launch, configure the JavaFX module path to point to the `lib` directory of your installed JavaFX SDK.
 
-Sample files are never overwritten on later launches. User files in the sandbox stay intact.
+Example for Windows PowerShell:
 
-## Recent Files behaviour
-
-1. Opening a file or launching a built-in app records an entry.
-2. Re-opening moves that entry to the newest position (no duplicates).
-3. Maximum seven entries; the oldest is dropped when a new distinct item is added.
-4. Deleting a file removes its recent entry only (the file itself is deleted only when you confirm Delete).
-5. List is restored after restart.
-6. Missing files are skipped on load and removed when selected.
-
-Implementation: `RecentFilesQueue` uses `Queue` backed by `LinkedList` (oldest at front, newest at back).
-
-## Data structures (for viva / comments)
-
-- **HashMap** – `AppManager` registry
-- **Stack** – `WindowHistory` (back navigation)
-- **LinkedList** – `WindowManager` open windows; also backs the recent queue
-- **Queue** – `RecentFilesQueue` (seven most recent files/apps)
-
-These names are not shown in the UI.
-
-## Manual testing checklist
-
-1. Compile and launch with `run.bat` / `run.sh`.
-2. Unlock with any password.
-3. Switch Dark/Light in Settings – wallpaper must change immediately.
-4. Open File Manager – see Documents, Pictures, Applications, Profile.json, Sample.java, Schedule.pdf.
-5. Double-click a `.txt` – preview and edit; Save.
-6. Double-click an image – preview.
-7. Double-click `Notes.app` – launches Notes and adds to Recent.
-8. Open several files until more than seven; confirm only seven recent entries and oldest dropped.
-9. Re-open a recent item – it moves to the top without duplication.
-10. Delete a file – confirm dialog; entry leaves Recent.
-11. Restart ThanOS – recent list restored; sample files still present; user-created files not wiped.
-12. Notes / Calendar / Calculator / Settings still work.
-
-## Project layout
-
-```
-ThanOS/
-  src/           Java sources
-  ui/            index.html, style.css, app.js
-  assets/        wallpaper-dark.jpg, wallpaper-light.jpg
-  samples/       seed content for File Manager
-  run.bat        Windows launch
-  run.sh         Unix launch
-  README.md
+```powershell
+java --module-path "C:\javafx-sdk\lib" --add-modules javafx.controls,javafx.web -cp bin ThanOS
 ```
 
-## Files modified vs original
+Replace `C:\javafx-sdk\lib` with your actual JavaFX SDK path. Compile the Java source files first if the `bin` directory does not contain the compiled classes.
 
-**Modified:** `SystemStore.java`, `JavaBridge.java`, `ui/app.js`, `ui/style.css`
+### 4. Run the application
 
-**Added:** `RecentFilesQueue.java`, `assets/*`, `samples/**`, `run.bat`, `run.sh`, `README.md`
+Run `ThanOS.java` from your IDE after configuring the JavaFX libraries and required VM arguments.
 
-**Unchanged:** AppDefinition, AppManager, NoteManager, CalendarManager, SettingsService, Window*, Workspace* classes, ThanOS.java, index.html (structure)
+The application loads its user interface from the local `ui/index.html` file.
 
-Workspace Java classes remain so the original architecture compiles; the UI no longer exposes Workspace or demo queue controls.
+## Data Storage
+
+ThanOS stores application data locally in a `.thanos` directory under the current user's home directory.
+
+Depending on the enabled functionality, this directory may contain:
+
+- `settings.properties` — Application preferences.
+- `notes.txt` — Saved notes.
+- `events.txt` — Calendar events.
+- `workspaces.txt` — Workspace-related data.
+- `recent.txt` — Recent items.
+- A sandbox directory — Files used by the simulated file manager.
+
+These are local application files and are separate from the source code stored in GitHub.
+
+## Project Architecture
+
+ThanOS follows a frontend-and-backend architecture:
+
+1. **Frontend:** HTML defines the interface, CSS controls the appearance, and JavaScript handles interactions.
+2. **Bridge:** `JavaBridge.java` exposes supported Java functionality to the frontend.
+3. **Backend:** Java managers handle application logic, windows, notes, events, settings, and other services.
+4. **Persistence:** Local storage services save supported application data between sessions.
+
+
+## Future Enhancements
+
+Potential improvements include:
+
+- Enhanced window resizing and snapping.
+- Additional built-in applications.
+- Improved desktop customization.
+- More robust file management.
+- Better error handling and application recovery.
+- Expanded workspace functionality.
+- Automated testing and packaging for distribution.
+
+
+**Repository:** [faustinamonishaandrew/ThanOS](https://github.com/faustinamonishaandrew/ThanOS)
+
+*ThanOS — Exploring desktop environments through Java.*

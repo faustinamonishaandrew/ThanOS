@@ -1,0 +1,4 @@
+Ideas
+=====
+
+A quiet, focused desktop with a practical file manager.

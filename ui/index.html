@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ThanOS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- LOCK SCREEN -->
+  <div id="lock-screen" class="screen active">
+    <div class="cosmic-bg">
+      <div class="orb"></div>
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="ring r3"></div>
+      <div class="stone s1"></div>
+      <div class="stone s2"></div>
+      <div class="stone s3"></div>
+      <div class="stone s4"></div>
+      <div class="stone s5"></div>
+      <div class="stone s6"></div>
+    </div>
+    <div class="lock-content">
+      <div class="avatar">T</div>
+      <div id="lock-clock" class="lock-clock">--:--</div>
+      <div id="lock-date" class="lock-date">—</div>
+      <input type="password" id="lock-password" class="lock-input" placeholder="Password" autocomplete="off" />
+      <button id="unlock-btn" class="btn primary">Unlock</button>
+      <div id="lock-feedback" class="feedback hidden"></div>
+      <p class="hint">Demo: any non-empty password</p>
+    </div>
+  </div>
+
+  <!-- DESKTOP -->
+  <div id="desktop" class="screen">
+    <div class="desktop-wallpaper"></div>
+    <div id="shortcuts" class="shortcuts"></div>
+    <div id="windows-layer"></div>
+
+    <div id="start-menu" class="start-menu hidden">
+      <div class="start-title">Applications</div>
+      <div id="start-apps"></div>
+    </div>
+
+    <div class="taskbar">
+      <button id="start-btn" class="taskbar-btn brand">◆ ThanOS</button>
+      <div id="taskbar-apps" class="taskbar-apps"></div>
+      <div class="taskbar-right">
+        <button id="lock-btn" class="taskbar-btn">Lock</button>
+        <span id="tb-clock" class="tb-clock">--:--</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

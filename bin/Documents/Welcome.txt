@@ -1,0 +1,3 @@
+Welcome to ThanOS.
+
+This is a real local text file stored in the ThanOS file system. You can edit and save it from the File Manager.

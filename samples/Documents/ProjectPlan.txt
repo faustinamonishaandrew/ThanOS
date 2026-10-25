@@ -1,0 +1,7 @@
+ThanOS Project Plan
+===================
+
+1. Desktop shell
+2. File Manager
+3. Recent files
+4. Notes and calendar

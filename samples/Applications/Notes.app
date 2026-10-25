@@ -1,0 +1,2 @@
+app=notes
+name=Notes

@@ -1,0 +1,6 @@
+Lecture Notes
+=============
+
+- Data structures organise information.
+- A queue processes entries in first-in, first-out order.
+- ThanOS tracks the seven most recently opened items.
